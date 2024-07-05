@@ -2,6 +2,8 @@ import tkinter as tk
 import ttkbootstrap as ttk 
 from tkinter import messagebox
 from numpy import random
+import pyperclip
+
 uppercase_alphabets = [chr(i) for i in range(65,91)]
 lowercase_alphabets = [chr(i) for i in range(97,123)]
 num = [str(i) for i in range(10)]
@@ -15,6 +17,7 @@ special_characters = [
 def Generate():
     try:
         password = ''
+        password_var.set('')
         length_value = length.get()
         l = int(length_value)
         if not char_var.get():
@@ -32,7 +35,8 @@ def Generate():
     except:
         messagebox.showerror('Invalid input', 'Your need to enter a number!')
         
-
+def copy_fun():
+    window.clipboard_append(password_var.get())
 
 
 
@@ -59,6 +63,7 @@ specialbtn = ttk.Checkbutton(master=button_frame,variable=special_var,text='Spec
 gen_button = ttk.Button(master=window,text="Generate",command=Generate,padding=10)
 output_label = ttk.Label(master=window,text='Your Passcode',padding=10)
 pass_label = ttk.Label(master=window,textvariable=password_var,padding=10)
+copybtn = ttk.Button(master=window,text='copy',padding=10,command=copy_fun)
 
 #packing widgets
 input_frame.pack()
@@ -72,5 +77,6 @@ button_frame.pack()
 gen_button.pack(pady=10)
 output_label.pack()
 pass_label.pack()
+copybtn.pack()
 
 window.mainloop()
