@@ -1,6 +1,7 @@
 import tkinter as tk
 import ttkbootstrap as ttk 
-from tkinter import messagebox
+from tkinter import messagebox, PhotoImage
+from PIL import Image, ImageTk
 from numpy import random
 import pyperclip
 
@@ -12,30 +13,30 @@ special_characters = [
     '{', '}', '[', ']', '|',':', ';', '"', '<', '>', ',', 
     '.', '?', '/', '~'
 ]
-
-
 def Generate():
     try:
         password = ''
         password_var.set('')
         length_value = length.get()
         l = int(length_value)
+        available_char = lowercase_alphabets
         if not char_var.get():
             for i in range(l):
-                password = password + random.choice(num)
+                password += random.choice(num)
         elif char_var.get() :
             if upper_var.get():
                 lowercase_alphabets.extend(uppercase_alphabets)
             if special_var.get():
                 lowercase_alphabets.extend(special_characters)  
-            lowercase_alphabets.extend(num)
+            available_char.extend(num)
             for i in range(l):
                 password += random.choice(lowercase_alphabets)
-        return password_var.set(password)
+        password_var.set(password)
     except:
         messagebox.showerror('Invalid input', 'Your need to enter a number!')
         
 def copy_fun():
+    window.clipboard_clear()
     window.clipboard_append(password_var.get())
 
 
@@ -51,6 +52,9 @@ char_var = ttk.BooleanVar()
 upper_var = ttk.BooleanVar()
 special_var = ttk.BooleanVar()
 password_var = ttk.StringVar()
+icon_size = (20, 20)
+icon = Image.open('1621635.png').resize(icon_size, Image.ADAPTIVE)
+
 
 #widgets
 input_frame = ttk.Frame(master=window,padding=50)
@@ -63,7 +67,8 @@ specialbtn = ttk.Checkbutton(master=button_frame,variable=special_var,text='Spec
 gen_button = ttk.Button(master=window,text="Generate",command=Generate,padding=10)
 output_label = ttk.Label(master=window,text='Your Passcode',padding=10)
 pass_label = ttk.Label(master=window,textvariable=password_var,padding=10)
-copybtn = ttk.Button(master=window,text='copy',padding=10,command=copy_fun)
+copy_btn_image = ImageTk.PhotoImage(icon)
+copy_btn = ttk.Button(master=window,image=copy_btn_image,padding=10,command=copy_fun)
 
 #packing widgets
 input_frame.pack()
@@ -77,6 +82,6 @@ button_frame.pack()
 gen_button.pack(pady=10)
 output_label.pack()
 pass_label.pack()
-copybtn.pack()
+copy_btn.pack()
 
 window.mainloop()
