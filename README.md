@@ -8,4 +8,5 @@ A mini project that generates password using random module in python, built it a
 - the password length you want 
 - Generates password with characters, numberic
 - you get to choose if you want uppercase char or special char
-- I learned pillow in which i wanted to add icon to buttons 
+- I learned pillow in which i wanted to add icon to buttons
+- there is also a button that directly copies the password to your cliport
